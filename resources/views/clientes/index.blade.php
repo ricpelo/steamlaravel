@@ -6,7 +6,7 @@
                     <th scope="col" class="px-6 py-3 font-medium">DNI</th>
                     <th scope="col" class="px-6 py-3 font-medium">Nombre</th>
                     <th scope="col" class="px-6 py-3 font-medium">Apellidos</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Acciones</th>
+                    <th scope="col" class="px-6 py-3 font-medium" colspan="2">Acciones</th>
                 </thead>
                 <tbody>
                     @foreach ($clientes as $cliente)
@@ -15,11 +15,16 @@
                         <td class="px-6 py-4">{{ $cliente->nombre }}</td>
                         <td class="px-6 py-4">{{ $cliente->apellidos }}</td>
                         <td>
-                            <form action="/clientes/borrar/{{ $cliente->id }}" method="POST">
+                            <form action="/clientes/{{ $cliente->id }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit">Borrar</button>
                             </form>
+                        </td>
+                        <td>
+                            <a href="/clientes/{{ $cliente->id }}/edit">
+                                Modificar
+                            </a>
                         </td>
                     </tr>
                 @endforeach

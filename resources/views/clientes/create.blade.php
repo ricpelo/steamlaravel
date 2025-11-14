@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <form action="/clientes/create" method="POST">
+    <form action="/clientes" method="POST">
         @csrf
         <label for="dni">DNI:* </label>
         <input type="text" id="dni" name="dni" value="{{ old('dni') }}"><br>
