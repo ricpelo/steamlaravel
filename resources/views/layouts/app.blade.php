@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-200">
         <!-- Barra superior -->
         <div class="navbar bg-base-100 shadow-sm">
             <div class="flex-1">
