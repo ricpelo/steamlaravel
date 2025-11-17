@@ -15,9 +15,31 @@
     @endif
 </head>
 
-<body class="font-sans antialiased">
+<body>
     <div class="min-h-screen bg-gray-100">
-        <main>
+        <!-- Barra superior -->
+        <div class="navbar bg-base-100 shadow-sm">
+            <div class="flex-1">
+                <a href="/" class="btn btn-ghost text-xl">Steam</a>
+            </div>
+            <div class="flex-none">
+                <ul class="menu menu-horizontal px-1">
+                    <li><a href="">Tienda</a></li>
+                    <li><a href="">Biblioteca</a></li>
+                    <li>
+                        <details>
+                            <summary>Menú</summary>
+                            <ul class="bg-base-100 rounded-t-none p-2">
+                                <li><a href="">Opciones</a></li>
+                                <li><a href="">Salir</a></li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Principal -->
+        <main class="m-6">
             {{ $slot }}
         </main>
     </div>
