@@ -14,6 +14,20 @@ class Videojuego extends Model
         'desarrolladora_id',
     ];
 
+    protected $casts = [
+        'lanzamiento' => 'datetime',
+    ];
+
+    public function getLanzamientoFormateadoAttribute(): string
+    {
+        return fecha_larga($this->lanzamiento);
+    }
+
+    public function getPrecioFormateadoAttribute(): string
+    {
+        return dinero($this->precio);
+    }
+
     public function desarrolladora(): BelongsTo
     {
         return $this->belongsTo(Desarrolladora::class);

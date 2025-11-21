@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VideojuegoController;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -68,3 +69,8 @@ Route::get('/clientes/{cliente}/edit', function (Cliente $cliente) {
         'cliente' => $cliente,
     ]);
 });
+
+// Route::get('/videojuegos', [VideojuegoController::class, 'index']);
+// Route::get('/videojuegos/create', [VideojuegoController::class, 'create']);
+// // ...
+Route::resource('videojuegos', VideojuegoController::class);
