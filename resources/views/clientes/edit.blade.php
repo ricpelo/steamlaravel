@@ -1,13 +1,5 @@
 <x-app-layout>
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <x-errores />
 
     <form action="/clientes/{{ $cliente->id }}" method="POST">
         @method('PUT')

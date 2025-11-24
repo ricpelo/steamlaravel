@@ -40,7 +40,7 @@ class VideojuegoController extends Controller
             'desarrolladora_id' => 'required|exists:desarrolladoras,id',
         ]);
         Videojuego::create($validated);
-        return redirect('/videojuegos');
+        return redirect()->route('videojuegos.index');
     }
 
     /**
