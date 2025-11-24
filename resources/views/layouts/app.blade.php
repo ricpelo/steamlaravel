@@ -24,8 +24,8 @@
             </div>
             <div class="flex-none">
                 <ul class="menu menu-horizontal px-1">
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Biblioteca</a></li>
+                    <li><a href="{{ route('clientes.index') }}">Clientes</a></li>
+                    <li><a href="{{ route('videojuegos.index') }}">Videojuegos</a></li>
                     <li>
                         <details>
                             <summary>Menú</summary>
