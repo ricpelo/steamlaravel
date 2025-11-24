@@ -22,7 +22,7 @@ class VideojuegoController extends Controller
      */
     public function create()
     {
-        //
+        return view('videojuegos.create');
     }
 
     /**
@@ -30,7 +30,14 @@ class VideojuegoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required|max:255',
+            'precio' => 'required|numeric|decimal:2|gte:-999999.99|lte:999999.99',
+            'lanzamiento' => 'required|date',
+            'desarrolladora_id' => 'required|exists:desarrolladoras,id',
+        ]);
+        Videojuego::create($validated);
+        return redirect('/videojuegos');
     }
 
     /**
