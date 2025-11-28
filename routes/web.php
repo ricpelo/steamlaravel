@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\VideojuegoController;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
@@ -74,3 +75,4 @@ Route::get('/clientes/{cliente}/edit', function (Cliente $cliente) {
 // Route::get('/videojuegos/create', [VideojuegoController::class, 'create']);
 // // ...
 Route::resource('videojuegos', VideojuegoController::class);
+Route::resource('generos', GeneroController::class);

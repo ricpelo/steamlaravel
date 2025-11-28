@@ -9,7 +9,12 @@
         <tbody>
             @foreach ($videojuegos as $videojuego)
                 <tr>
-                    <td>{{ $videojuego->nombre }}</td>
+                    <td>
+                        <a class="link link-primary"
+                           href="{{ route('videojuegos.show', $videojuego) }}">
+                            {{ $videojuego->nombre }}
+                        </a>
+                    </td>
                     <td>{{ $videojuego->precio_formateado }}</td>
                     <td>{{ $videojuego->lanzamiento_formateado }}</td>
                     <td>{{ $videojuego->desarrolladora->denominacion }}</td>
