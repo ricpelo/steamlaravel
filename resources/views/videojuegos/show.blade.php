@@ -1,6 +1,7 @@
 <x-app-layout>
-    <div class="card bg-base-100 w-full shadow-sm">
-        <figure>
+    <x-errores />
+    <div class="card bg-base-300 w-full shadow-sm">
+        <figure class="p-4">
             <img width="320" height="200"
                 src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                 alt="Shoes" />
@@ -27,20 +28,42 @@
                                 </a>
                             </div>
                         </div>
-                        <button class="btn btn-square btn-ghost">
-                            <svg class="size-[1.2em]"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
-                                <g stroke-linejoin="round"
-                                    stroke-linecap="round" stroke-width="2"
-                                    fill="none" stroke="currentColor">
-                                    <path d="M6 3L20 12 6 21 6 3z"></path>
-                                </g>
-                            </svg>
-                        </button>
+                        <form
+                            action="{{ route(
+                                'videojuegos.quitar_genero',
+                                ['videojuego' => $videojuego, 'genero' => $genero]
+                            ) }}"
+                            method="POST"
+                        >
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-square btn-ghost">🗑</button>
+                        </form>
                     </li>
                 @endforeach
             </ul>
+            @if ($otros_generos->isNotEmpty())
+                <form
+                    class="mt-4"
+                    action="{{ route('videojuegos.agregar_genero', $videojuego) }}"
+                    method="POST"
+                    >
+                    @csrf
+                    <div class="flex gap-3">
+                        <label for="genero_id" class="floating-label w-80">
+                            <span>Género a añadir:</span>
+                            <select class="select" name="genero_id" id="genero_id">
+                                @foreach ($otros_generos as $otro_genero)
+                                <option value="{{ $otro_genero->id }}">
+                                    {{ $otro_genero->genero }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </label>
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                    </div>
+                </form>
+            @endif
         </div>
     </div>
 </x-app-layout>
