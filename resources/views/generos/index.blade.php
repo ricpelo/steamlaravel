@@ -13,7 +13,10 @@
         </form>
         <table class="table">
             <thead>
-                <th>Género</th>
+                <th>
+                    <a class="btn btn-ghost"
+                       href="{{ request()->fullUrlWithQuery(['sentido' => 'asc']) }}">Género</a>
+                </th>
             </thead>
             <tbody>
                 @foreach ($generos as $genero)
