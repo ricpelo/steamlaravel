@@ -10,10 +10,15 @@ class GeneroController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $q = Genero::orderBy('genero');
+        if ($buscar = $request->query('buscar')) {
+            $q->whereLike('genero', "%$buscar%", false);
+        }
         return view('generos.index', [
-            'generos' => Genero::orderBy('genero')->get(),
+            'generos' => $q->paginate(5)->withQueryString(),
+            'buscar' => $buscar,
         ]);
     }
 
