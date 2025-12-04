@@ -41,6 +41,8 @@
         </div>
         <!-- Principal -->
         <main class="m-6">
+            <x-alert-exito />
+            <x-alert-fallo />
             {{ $slot }}
         </main>
     </div>

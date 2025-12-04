@@ -14,14 +14,31 @@
         <table class="table">
             <thead>
                 <th>
+                    @php
+                    $sentido = $sentido == 'asc' ? 'desc' : 'asc';
+                    $flecha = $sentido == 'asc' ? '↑' : '↓';
+                    @endphp
                     <a class="btn btn-ghost"
-                       href="{{ request()->fullUrlWithQuery(['sentido' => 'asc']) }}">Género</a>
+                       href="{{ request()->fullUrlWithQuery(['sentido' => $sentido]) }}">
+                       Género {{ $flecha }}
+                    </a>
                 </th>
+                <th>Acciones</th>
             </thead>
             <tbody>
                 @foreach ($generos as $genero)
                     <tr>
                         <td>{{ $genero->genero }}</td>
+                        <td>
+                            <form
+                                action="{{ route('generos.destroy', $genero) }}"
+                                method="POST"
+                            >
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-square btn-ghost">🗑</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
