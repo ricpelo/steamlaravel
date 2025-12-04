@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Videojuego extends Model
 {
@@ -52,8 +53,8 @@ class Videojuego extends Model
         return $this->hasMany(Logro::class);
     }
 
-    public function users(): BelongsToMany
+    public function users(): MorphToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->morphToMany(User::class, 'adquirible');
     }
 }

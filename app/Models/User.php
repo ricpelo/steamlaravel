@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -53,9 +54,14 @@ class User extends Authenticatable
         return $this->hasOne(Cliente::class);
     }
 
-    public function videojuegos(): BelongsToMany
+    public function videojuegos(): MorphToMany
     {
-        return $this->belongsToMany(Videojuego::class)->withTimestamps();
+        return $this->morphedByMany(Videojuego::class, 'adquirible');
+    }
+
+    public function hardware(): MorphToMany
+    {
+        return $this->morphedByMany(Hardware::class, 'adquirible');
     }
 
     public function logros(): BelongsToMany
