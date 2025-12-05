@@ -3,6 +3,7 @@
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\VideojuegoController;
 use App\Models\Cliente;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -88,3 +89,9 @@ Route::delete(
 )->name('videojuegos.quitar_genero');
 
 Route::redirect('/', route('videojuegos.index'));
+
+Route::get('/profile', function () {
+    return view('user.profile', [
+        'user' => User::find(2),
+    ]);
+})->name('user.profile');

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Mi aplicación</title>
+    <title>{{ $title ?? 'Mi aplicación' }}</title>
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
@@ -30,8 +30,8 @@
                     <li>
                         <details>
                             <summary>Menú</summary>
-                            <ul class="bg-base-100 rounded-t-none p-2">
-                                <li><a href="">Opciones</a></li>
+                            <ul class="bg-base-100 rounded-t-none p-2 z-1">
+                                <li><a href="/profile">Perfil</a></li>
                                 <li><a href="">Salir</a></li>
                             </ul>
                         </details>

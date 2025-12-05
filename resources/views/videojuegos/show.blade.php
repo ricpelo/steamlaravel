@@ -7,8 +7,10 @@
                 alt="Shoes" />
         </figure>
         <div class="card-body">
-            <h2 class="card-title text-3xl uppercase">{{ $videojuego->nombre }}
+            <h2 class="card-title text-3xl uppercase tracking-wide">
+                {{ $videojuego->nombre }}
             </h2>
+            <span>Publicado el {{ $videojuego->lanzamiento_formateado }}</span>
 
             <ul class="list bg-base-100 rounded-box shadow-md">
                 <li class="p-4 pb-2 opacity-60 tracking-wide text-xl">
