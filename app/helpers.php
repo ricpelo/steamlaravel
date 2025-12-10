@@ -15,8 +15,8 @@ if (!function_exists('fecha_larga')) {
     function fecha_larga(Carbon $valor): string
     {
         return $valor
-        ->locale('es')
-        ->timezone('Europe/Madrid')
-        ->translatedFormat('d \d\e F \d\e Y');
+            ->locale('es')
+            ->timezone('Europe/Madrid')
+            ->translatedFormat('d \d\e F \d\e Y');
     }
 }
