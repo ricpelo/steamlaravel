@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\GeneroController;
+use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\VideojuegoController;
 use App\Models\Cliente;
+use App\Models\Habitacion;
+use App\Models\Reserva;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -95,3 +99,31 @@ Route::get('/profile', function () {
         'user' => User::find(2),
     ]);
 })->name('user.profile');
+
+Route::resource('habitaciones', HabitacionController::class)
+    ->parameters(['habitaciones' => 'habitacion']);
+
+Route::delete('/reservas/{reserva}', function (Reserva $reserva) {
+    $habitacion = $reserva->habitacion;
+    $reserva->delete();
+    return redirect()->route('habitaciones.show', $habitacion);
+})->name('reservas.destroy');
+
+Route::post('/reservas/{habitacion}', function (Habitacion $habitacion) {
+    $fecha_entrada = request('fecha_entrada');
+    $fecha_salida = request('fecha_salida');
+    // dd($fecha_entrada, $fecha_salida, $habitacion);
+    $res = $habitacion->whereDoesntHave('reservas', function (Builder $query) use ($fecha_entrada, $fecha_salida) {
+        $query->where('fecha_entrada', '<=', $fecha_salida)
+            ->where('fecha_salida', '>=', $fecha_entrada);
+    })->exists();
+    if (!$res) {
+        return back()->with('fallo', 'No se ha podido reservar la habitación.');
+    }
+    $habitacion->reservas()->create([
+        'fecha_entrada' => $fecha_entrada,
+        'fecha_salida' => $fecha_salida,
+    ]);
+    return redirect()->route('habitaciones.index')
+        ->with('exito', 'Se ha reservado correctamente.');
+})->name('reservas.create');
