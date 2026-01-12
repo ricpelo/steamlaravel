@@ -30,14 +30,16 @@
                     <tr>
                         <td>{{ $genero->genero }}</td>
                         <td>
-                            <form
-                                action="{{ route('generos.destroy', $genero) }}"
-                                method="POST"
-                            >
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-square btn-ghost">🗑</button>
-                            </form>
+                            @auth
+                                <form
+                                    action="{{ route('generos.destroy', $genero) }}"
+                                    method="POST"
+                                >
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-square btn-ghost">🗑</button>
+                                </form>
+                            @endauth
                         </td>
                     </tr>
                 @endforeach

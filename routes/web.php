@@ -5,6 +5,7 @@ use App\Http\Controllers\VideojuegoController;
 use App\Models\Cliente;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -75,23 +76,63 @@ Route::get('/clientes/{cliente}/edit', function (Cliente $cliente) {
 // Route::get('/videojuegos', [VideojuegoController::class, 'index']);
 // Route::get('/videojuegos/create', [VideojuegoController::class, 'create']);
 // // ...
-Route::resource('videojuegos', VideojuegoController::class);
-Route::resource('generos', GeneroController::class);
+Route::resource('videojuegos', VideojuegoController::class)
+    ->except(['index', 'show'])
+    ->middleware('auth');
 
-Route::post(
-    '/videojuegos/{videojuego}/agregar_genero',
-    [VideojuegoController::class, 'agregar_genero']
-)->name('videojuegos.agregar_genero');
+Route::resource('videojuegos', VideojuegoController::class)
+    ->only(['index', 'show']);
 
-Route::delete(
-    'videojuegos/{videojuego}/quitar_genero/{genero}',
-    [VideojuegoController::class, 'quitar_genero']
-)->name('videojuegos.quitar_genero');
+Route::resource('generos', GeneroController::class)
+    ->except(['index', 'show'])
+    ->middleware('auth');
+
+Route::resource('generos', GeneroController::class)
+    ->only(['index', 'show']);
+
+Route::middleware('auth')->group(function () {
+    Route::post(
+        '/videojuegos/{videojuego}/agregar_genero',
+        [VideojuegoController::class, 'agregar_genero']
+    )->name('videojuegos.agregar_genero');
+
+    Route::delete(
+        'videojuegos/{videojuego}/quitar_genero/{genero}',
+        [VideojuegoController::class, 'quitar_genero']
+    )->name('videojuegos.quitar_genero');
+
+    Route::get('/profile', function () {
+        return view('user.profile', [
+            'user' => Auth::user(),
+        ]);
+    })->name('user.profile');
+
+    Route::post('/logout', function (Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    })->name('logout');
+});
 
 Route::redirect('/', route('videojuegos.index'));
 
-Route::get('/profile', function () {
-    return view('user.profile', [
-        'user' => User::find(2),
+Route::get('/login', function () {
+    return view('user.login');
+})->name('login');
+
+Route::post('/login', function (Request $request) {
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
     ]);
-})->name('user.profile');
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+        return redirect()->intended(route('user.profile'));
+    }
+
+    return back()->withErrors([
+        'email' => 'Las credenciales no coinciden con nuestros registros.',
+    ])->onlyInput('email');
+})->name('login.perform');

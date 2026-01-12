@@ -30,42 +30,46 @@
                                 </a>
                             </div>
                         </div>
-                        <form
-                            action="{{ route(
-                                'videojuegos.quitar_genero',
-                                ['videojuego' => $videojuego, 'genero' => $genero]
-                            ) }}"
-                            method="POST"
-                        >
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-square btn-ghost">🗑</button>
-                        </form>
+                        @auth
+                            <form
+                                action="{{ route(
+                                    'videojuegos.quitar_genero',
+                                    ['videojuego' => $videojuego, 'genero' => $genero]
+                                ) }}"
+                                method="POST"
+                                >
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-square btn-ghost">🗑</button>
+                            </form>
+                        @endauth
                     </li>
                 @endforeach
             </ul>
-            @if ($otros_generos->isNotEmpty())
-                <form
+            @auth
+                @if ($otros_generos->isNotEmpty())
+                    <form
                     class="mt-4"
-                    action="{{ route('videojuegos.agregar_genero', $videojuego) }}"
-                    method="POST"
-                    >
-                    @csrf
-                    <div class="flex gap-3">
-                        <label for="genero_id" class="floating-label w-80">
-                            <span>Género a añadir:</span>
-                            <select class="select" name="genero_id" id="genero_id">
-                                @foreach ($otros_generos as $otro_genero)
-                                <option value="{{ $otro_genero->id }}">
-                                    {{ $otro_genero->genero }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </label>
-                        <button type="submit" class="btn btn-primary">Añadir</button>
-                    </div>
-                </form>
-            @endif
+                        action="{{ route('videojuegos.agregar_genero', $videojuego) }}"
+                        method="POST"
+                        >
+                        @csrf
+                        <div class="flex gap-3">
+                            <label for="genero_id" class="floating-label w-80">
+                                <span>Género a añadir:</span>
+                                <select class="select" name="genero_id" id="genero_id">
+                                    @foreach ($otros_generos as $otro_genero)
+                                    <option value="{{ $otro_genero->id }}">
+                                        {{ $otro_genero->genero }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                            <button type="submit" class="btn btn-primary">Añadir</button>
+                        </div>
+                    </form>
+                @endif
+            @endauth
         </div>
     </div>
 </x-app-layout>

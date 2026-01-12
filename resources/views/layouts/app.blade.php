@@ -28,13 +28,22 @@
                     <li><a href="{{ route('clientes.index') }}">Clientes</a></li>
                     <li><a href="{{ route('videojuegos.index') }}">Videojuegos</a></li>
                     <li>
-                        <details>
-                            <summary>Menú</summary>
-                            <ul class="bg-base-100 rounded-t-none p-2 z-1">
-                                <li><a href="/profile">Perfil</a></li>
-                                <li><a href="">Salir</a></li>
-                            </ul>
-                        </details>
+                        @auth
+                            <details>
+                                <summary>{{ Auth::user()->name }}</summary>
+                                <ul class="bg-base-100 rounded-t-none p-2 z-1">
+                                    <li><a href="{{ route('user.profile') }}">Perfil</a></li>
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit">Salir</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </details>
+                        @else
+                            <a href="{{ route('login') }}">Login</a>
+                        @endauth
                     </li>
                 </ul>
             </div>
