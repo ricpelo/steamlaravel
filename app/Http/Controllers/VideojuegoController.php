@@ -7,6 +7,8 @@ use App\Models\Genero;
 use App\Models\Videojuego;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class VideojuegoController extends Controller
 {
@@ -25,6 +27,19 @@ class VideojuegoController extends Controller
      */
     public function create()
     {
+        // Gate::authorize('videojuego-create');
+        if (Gate::denies('videojuego-create')) {
+            return redirect()
+                ->route('videojuegos.index')
+                ->with('fallo', 'No tienes permiso para crear videojuegos.');
+            // abort(403, 'No tienes permiso para crear videojuegos.');
+        }
+        // if (!Gate::allows('videojuego-create')) {
+        //     abort(403, 'No tienes permiso para crear videojuegos.');
+        // }
+        // if (!Auth::user()->can('videojuego-create')) {
+        //     abort(403, 'No tienes permiso para crear videojuegos.');
+        // }
         return view('videojuegos.create', [
             'desarrolladoras' => Desarrolladora::all(),
         ]);

@@ -22,4 +22,7 @@
             @endforeach
         </tbody>
     </table>
+    @can('videojuego-create')
+        <a class="btn btn-sm btn-ghost btn-primary" href="{{ route('videojuegos.create') }}">Dar de alta un nuevo videojuego</a>
+    @endcan
 </x-app-layout>
