@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\VideojuegoController;
 use App\Models\Cliente;
@@ -136,3 +137,5 @@ Route::post('/login', function (Request $request) {
         'email' => 'Las credenciales no coinciden con nuestros registros.',
     ])->onlyInput('email');
 })->name('login.perform');
+
+Route::resource('comentarios', ComentarioController::class);

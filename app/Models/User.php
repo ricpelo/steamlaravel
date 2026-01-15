@@ -68,4 +68,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Logro::class)->withTimestamps();
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
 }

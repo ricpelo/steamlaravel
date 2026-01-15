@@ -57,4 +57,9 @@ class Videojuego extends Model
     {
         return $this->morphToMany(User::class, 'adquirible');
     }
+
+    public function comentarios(): HasMany
+    {
+        return $this->hasMany(Comentario::class);
+    }
 }
