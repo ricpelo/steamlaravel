@@ -6,6 +6,7 @@ use App\Models\Comentario;
 use App\Models\User;
 use App\Models\Videojuego;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Http\RedirectResponse;
 
 class ComentarioPolicy
 {
@@ -14,6 +15,7 @@ class ComentarioPolicy
      */
     public function viewAny(User $user): Response
     {
+        return Response::deny('Sólo el administrador puede ver los comentarios');
         return Response::allow();
         // return $user->name == 'admin'
         //     ? Response::allow()
