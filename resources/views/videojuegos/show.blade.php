@@ -3,8 +3,8 @@
     <div class="card bg-base-300 w-full shadow-sm">
         <figure class="p-4">
             <img width="320" height="200"
-                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                alt="Shoes" />
+                src="{{ $videojuego->image_url }}"
+            />
         </figure>
         <div class="card-body">
             <h2 class="card-title text-3xl uppercase tracking-wide">

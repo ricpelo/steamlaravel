@@ -4,6 +4,7 @@
     <div class="w-full max-w-sm mx-auto">
         <h2 class="text-2xl font-bold mb-3">Insertar un videojuego</h2>
         <form action="/videojuegos" method="POST"
+            enctype="multipart/form-data"
             class="card bg-base-200 p-6 shadow">
             @csrf
             <label for="nombre" class="floating-label">
@@ -34,9 +35,16 @@
                     @endforeach
                 </select>
             </label>
+            <div class="mt-6 mb-4">
+                <label for="imagen" class="floating-label">
+                    <span>Imagen:</span>
+                    <input class="file-input" type="file" id="imagen"
+                    name="imagen" value="{{ old('imagen') }}">
+                </label>
+            </div>
             <div class="flex-2">
                 <button class="btn btn-soft btn-success"
-                    type="submit">Insertar</button>
+                type="submit">Insertar</button>
                 <a href="/videojuegos" class="btn btn-soft btn-info">Volver</a>
             </div>
         </form>

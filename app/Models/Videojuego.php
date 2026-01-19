@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Videojuego extends Model
 {
@@ -18,6 +19,7 @@ class Videojuego extends Model
         'precio',
         'lanzamiento',
         'desarrolladora_id',
+        'imagen',
     ];
 
     protected $casts = [
@@ -73,6 +75,13 @@ class Videojuego extends Model
             'precio' => 'required|numeric|decimal:2|gte:-999999.99|lte:999999.99',
             'lanzamiento' => 'required|date',
             'desarrolladora_id' => 'required|exists:desarrolladoras,id',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
+    }
+
+    public function getImageUrlAttribute()
+    {
+        // asset("storage/videojuegos/" . $videojuego->imagen)
+        return Storage::url("videojuegos/" . $this->imagen);
     }
 }
