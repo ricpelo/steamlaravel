@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class VideojuegoController extends Controller
 {
@@ -57,7 +58,7 @@ class VideojuegoController extends Controller
         $file = $request->file('imagen');
 
         if ($request->hasFile('imagen')) {
-            $ruta = $file->store('videojuegos', 'public');
+            $ruta = $file->store('imagenes', 'public');
             $datos['imagen'] = basename($ruta);
         }
 

@@ -82,6 +82,6 @@ class Videojuego extends Model
     public function getImageUrlAttribute()
     {
         // asset("storage/videojuegos/" . $videojuego->imagen)
-        return Storage::url("videojuegos/" . $this->imagen);
+        return Storage::disk('imagenes')->url($this->imagen);
     }
 }

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 // Route::get('/', function () {
 //     return redirect()->route('videojuegos.index');
@@ -139,3 +140,9 @@ Route::post('/login', function (Request $request) {
 })->name('login.perform');
 
 Route::resource('comentarios', ComentarioController::class);
+
+Route::get('/pruebas', function () {
+    return imagen_url_relativa('ejemplo.jpg');
+    // return parse_url(Storage::disk('imagenes')->url('ejemplo.jpg'), PHP_URL_PATH);
+    // Storage::disk('imagenes')->url('ejemplo.jpg');
+});
