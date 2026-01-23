@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 
 class VideojuegoController extends Controller
 {
@@ -56,13 +57,13 @@ class VideojuegoController extends Controller
     {
         $datos = $request->validated();
         $file = $request->file('imagen');
-
+        $imagen_jpg = Image::read($file)->scale(null, 400)->toJpeg(80);
         $videojuego = Videojuego::create($datos);
 
+
         if ($request->hasFile('imagen')) {
-            $ext = $file->getClientOriginalExtension();
-            $nombre = $videojuego->id . '.' . $ext;
-            $file->storeAs('imagenes', $nombre, 'public');
+            $nombre = $videojuego->id . '.jpg';
+            Storage::disk('public')->put(imagen_path_relativa($nombre), $imagen_jpg);
             $videojuego->imagen = $nombre;
             $videojuego->save();
         }

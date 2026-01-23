@@ -22,23 +22,30 @@ if (!function_exists('fecha_larga')) {
     }
 }
 
-if (!function_exists('imagen_path')) {
-    function imagen_path(string $nombre_archivo): string
+if (!function_exists('imagen_path_relativa')) {
+    function imagen_path_relativa(string $nombre_archivo): string
     {
-        return Storage::disk('public')->path('imagenes/' . $nombre_archivo);
+        return 'imagenes/' . $nombre_archivo;
+    }
+}
+
+if (!function_exists('imagen_path_absoluta')) {
+    function imagen_path_absoluta(string $nombre_archivo): string
+    {
+        return Storage::disk('public')->path(imagen_path_relativa($nombre_archivo));
     }
 }
 
 if (!function_exists('imagen_url_absoluta')) {
     function imagen_url_absoluta(string $nombre_archivo): string
     {
-        return Storage::disk('public')->url('imagenes/' . $nombre_archivo);
+        return Storage::disk('public')->url(imagen_path_relativa($nombre_archivo));
     }
 }
 
 if (!function_exists('imagen_url_relativa')) {
     function imagen_url_relativa(string $nombre_archivo): string
     {
-        return Storage::url('imagenes/' . $nombre_archivo);
+        return Storage::url(imagen_path_relativa($nombre_archivo));
     }
 }

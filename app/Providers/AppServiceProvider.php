@@ -21,8 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Gate::define('videojuego-create', function (User $user) {
-        //     return $user->name == 'admin';
-        // });
+        Gate::define('videojuego-create', function (User $user) {
+            return $user->name == 'admin';
+        });
     }
 }

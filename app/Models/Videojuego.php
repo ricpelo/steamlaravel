@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class Videojuego extends Model
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'nombre',
         'precio',
@@ -75,7 +73,7 @@ class Videojuego extends Model
             'precio' => 'required|numeric|decimal:2|gte:-999999.99|lte:999999.99',
             'lanzamiento' => 'required|date',
             'desarrolladora_id' => 'required|exists:desarrolladoras,id',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
     }
 
