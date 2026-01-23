@@ -142,7 +142,9 @@ Route::post('/login', function (Request $request) {
 Route::resource('comentarios', ComentarioController::class);
 
 Route::get('/pruebas', function () {
-    return imagen_url_relativa('ejemplo.jpg');
+    dump(imagen_path('ejemplo.jpg'));
+    dump(imagen_url_absoluta('ejemplo.jpg'));
+    dump(imagen_url_relativa('ejemplo.jpg'));
     // return parse_url(Storage::disk('imagenes')->url('ejemplo.jpg'), PHP_URL_PATH);
     // Storage::disk('imagenes')->url('ejemplo.jpg');
 });

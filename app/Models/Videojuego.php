@@ -79,9 +79,8 @@ class Videojuego extends Model
         ];
     }
 
-    public function getImageUrlAttribute()
+    public function getImagenUrlAttribute()
     {
-        // asset("storage/videojuegos/" . $videojuego->imagen)
-        return Storage::disk('imagenes')->url($this->imagen);
+        return imagen_url_relativa($this->imagen);
     }
 }

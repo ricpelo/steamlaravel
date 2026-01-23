@@ -57,12 +57,16 @@ class VideojuegoController extends Controller
         $datos = $request->validated();
         $file = $request->file('imagen');
 
+        $videojuego = Videojuego::create($datos);
+
         if ($request->hasFile('imagen')) {
-            $ruta = $file->store('imagenes', 'public');
-            $datos['imagen'] = basename($ruta);
+            $ext = $file->getClientOriginalExtension();
+            $nombre = $videojuego->id . '.' . $ext;
+            $file->storeAs('imagenes', $nombre, 'public');
+            $videojuego->imagen = $nombre;
+            $videojuego->save();
         }
 
-        Videojuego::create($datos);
         return redirect()->route('videojuegos.index');
     }
 

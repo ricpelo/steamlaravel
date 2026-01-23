@@ -3,7 +3,7 @@
     <div class="card bg-base-300 w-full shadow-sm">
         <figure class="p-4">
             <img width="320" height="200"
-                src="{{ $videojuego->image_url }}"
+                src="{{ $videojuego->imagen_url }}"
             />
         </figure>
         <div class="card-body">
