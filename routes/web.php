@@ -158,3 +158,5 @@ Route::post('/ajax/mayusculas', function (Request $request) {
         'resultado' => mb_strtoupper($texto),
     ]);
 });
+
+Route::livewire('/livewire', 'pages::post.create');
