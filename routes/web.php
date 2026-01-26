@@ -142,9 +142,19 @@ Route::post('/login', function (Request $request) {
 Route::resource('comentarios', ComentarioController::class);
 
 Route::get('/pruebas', function () {
-    dump(imagen_path('ejemplo.jpg'));
     dump(imagen_url_absoluta('ejemplo.jpg'));
     dump(imagen_url_relativa('ejemplo.jpg'));
     // return parse_url(Storage::disk('imagenes')->url('ejemplo.jpg'), PHP_URL_PATH);
     // Storage::disk('imagenes')->url('ejemplo.jpg');
+});
+
+Route::get('/ajax', function () {
+    return view('ajax');
+});
+
+Route::post('/ajax/mayusculas', function (Request $request) {
+    $texto = $request->input('texto');
+    return response()->json([
+        'resultado' => mb_strtoupper($texto),
+    ]);
 });
