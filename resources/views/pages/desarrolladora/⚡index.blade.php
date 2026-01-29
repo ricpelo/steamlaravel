@@ -12,7 +12,9 @@ new class extends Component
     #[Validate('required|string|max:255')]
     public string $denominacion = '';
 
-    public $puedeEditarse = false;
+    public $modal = false;
+
+    public $esEditar = false;
 
     #[Computed]
     public function desarrolladoras()
@@ -28,25 +30,31 @@ new class extends Component
             // Lógica para cargar los datos de la desarrolladora en el formulario de edición
             $this->desarrolladora = $desarrolladora;
             $this->denominacion = $desarrolladora->denominacion;
-            $this->puedeEditarse = true;
+            $this->modal = true;
+            $this->esEditar = true;
         }
     }
 
-    public function update()
+    public function createUpdate()
     {
-        if ($this->desarrolladora !== null) {
-            $this->validate();
+        $this->validate();
+        if ($this->desarrolladora === null) {
+            Desarrolladora::create([
+                'denominacion' => $this->denominacion,
+                'editora_id' => 1,
+            ]);
+        } else {
             $this->desarrolladora->denominacion = $this->denominacion;
             $this->desarrolladora->save();
-            $this->resetFormulario();
         }
+        $this->resetFormulario();
     }
 
     public function resetFormulario()
     {
         $this->desarrolladora = null;
         $this->denominacion = '';
-        $this->puedeEditarse = false;
+        $this->modal = false;
     }
 
     public function eliminar($id)
@@ -56,6 +64,13 @@ new class extends Component
         if ($desarrolladora !== null) {
             $desarrolladora->delete();
         }
+    }
+
+    public function crear()
+    {
+        $this->resetFormulario();
+        $this->modal = true;
+        $this->esEditar = false;
     }
 }
 ?>
@@ -95,13 +110,16 @@ new class extends Component
                     @endforeach
                 </tbody>
             </table>
-            <a class="btn btn-sm btn-ghost btn-primary" href="#">Dar de alta una nueva desarrolladora</a>
+            <button class="btn btn-soft btn-primary mt-4"
+                wire:click="crear">
+                Dar de alta una nueva desarrolladora
+            </button>
         </div>
 
         <!-- Formulario de creación y edición de desarrolladoras -->
-        <div class="w-full max-w-sm mx-auto">
-            <h2 class="text-2xl font-bold mb-3">Editar una desarrolladora</h2>
-            <form class="card bg-base-200 p-6 shadow" wire:submit.prevent="update">
+        <div class="w-full max-w-sm mx-auto" wire:show="modal">
+            <h2 class="text-2xl font-bold mb-3">{{ $esEditar ? 'Editar una desarrolladora' : 'Crear una desarrolladora' }}</h2>
+            <form class="card bg-base-200 p-6 shadow" wire:submit.prevent="createUpdate">
                 <label for="denominacion" class="floating-label">
                     <span>denominacion:*</span>
                     <input class="input" type="text" id="denominacion"
@@ -114,14 +132,13 @@ new class extends Component
                     <button
                         class="btn btn-soft btn-success"
                         type="submit"
-                        wire:show="puedeEditarse"
                     >
-                        Editar
+                        {{ $esEditar ? 'Editar' : 'Crear' }}
                     </button>
                     <button
                         class="btn btn-soft btn-error"
                         type="button"
-                        wire:show="puedeEditarse"
+
                         wire:click="resetFormulario"
                     >
                         Cancelar
