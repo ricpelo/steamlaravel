@@ -160,3 +160,6 @@ Route::post('/ajax/mayusculas', function (Request $request) {
 });
 
 Route::livewire('/livewire', 'pages::post.create');
+
+Route::livewire('/desarrolladoras', 'pages::desarrolladora.index')
+    ->name('desarrolladora.index');
